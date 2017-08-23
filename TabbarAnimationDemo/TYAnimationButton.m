@@ -45,6 +45,7 @@
     _duration = 3.0f;
     
     _animationType = TYBarItemAnimationTypeScale;
+    
 }
 
 
@@ -59,7 +60,9 @@
         _badgeView.badgePositionAdjustment = CGPointMake(-_badgeOffsetX, _badgeOffsetY);
         _badgeView.badgeStrokeWidth = 0.2;
         _badgeView.badgeText  = _badgeText;
+
     }
+
 }
 
 #pragma mark - setter getter
@@ -86,22 +89,6 @@
 
 -(void)setImages:(NSArray *)images{
     _images = images;
-    
-    //设置动画图片 给button imageView 添加帧动画
-    UIImageView * imageView = self.imageView;
-    //设置动画帧
-    NSMutableArray *mutalImages = [NSMutableArray array];
-    for (NSString *imageName in images) {
-       [mutalImages addObject:[UIImage imageNamed:imageName]];
-    }
-    
-//    [self setImage:mutalImages.firstObject forState:UIControlStateNormal];
-    
-    imageView.animationImages= mutalImages;
-    //设置动画总时间
-    imageView.animationDuration = _duration;
-    //设置重复次数，0表示无限
-    imageView.animationRepeatCount = 1;
 }
 
 #pragma mark - 动画
@@ -112,7 +99,7 @@
     }else if(_animationType == TYBarItemAnimationTypeFrames){  //帧动画
         if (_images) {  //有提供动画图片的才可以动画
             if (!self.imageView.isAnimating) {  //没有动画 则开启动画 如果当前正在动画 则什么都不做
-                [self.imageView startAnimating];
+                [self frameAnimation];
             }
         }
     }else if(_animationType == TYBarItemAnimationTypeScale){  //
@@ -129,7 +116,9 @@
         
     }else if(_animationType == TYBarItemAnimationTypeFrames){
         if (_images) {  //有提供动画图片的才可以动画
-            if (self.imageView.isAnimating) {  //正在动画 则开始动画
+            if (self.imageView.isAnimating)
+            {  //正在动画 则开始动画
+                self.imageView.animationImages = nil;
                 [self.imageView stopAnimating];
             }
         }
@@ -140,6 +129,23 @@
     }else{
         
     }
+}
+
+-(void)frameAnimation{
+    //设置动画图片 给button imageView 添加帧动画
+    UIImageView * imageView = self.imageView;
+    //设置动画帧
+    NSMutableArray *mutalImages = [NSMutableArray array];
+    for (NSString *imageName in self.images) {
+        [mutalImages addObject:[UIImage imageNamed:imageName]];
+    }
+    imageView.animationImages= mutalImages;
+    //设置动画总时间
+    imageView.animationDuration = _duration;
+    //设置重复次数，0表示无限
+    imageView.animationRepeatCount = 1;
+    
+    [imageView startAnimating];
 }
 
 //缩放动画

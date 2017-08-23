@@ -15,19 +15,68 @@
 
 @property (nonatomic,strong) TYTabBar *tyTabbar;
 
+@property (nonatomic,strong) NSMutableArray *quizAnimationImages;
+@property (nonatomic,strong) NSMutableArray *matchAnimationImages;
+@property (nonatomic,strong) NSMutableArray *discountAnimationImages;
+@property (nonatomic,strong) NSMutableArray *mineAnimationImages;
+
 @end
 
 @implementation TYTabbarController
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+
+    [self addImages];
+
+    //设置controllers
+    [self loadViewControllers];
     
     [self setupTabbar];
     
-    //设置controllers
-    [self loadViewControllers];
 }
 
+- (NSMutableArray *)quizAnimationImages {
+    if (!_quizAnimationImages) {
+        _quizAnimationImages = [NSMutableArray array];
+    }
+    return _quizAnimationImages;
+}
+
+- (NSMutableArray *)matchAnimationImages {
+    if (!_matchAnimationImages) {
+        _matchAnimationImages = [NSMutableArray array];
+    }
+    return _matchAnimationImages;
+}
+
+- (NSMutableArray *)discountAnimationImages {
+    if (!_discountAnimationImages) {
+        _discountAnimationImages = [NSMutableArray array];
+    }
+    return _discountAnimationImages;
+}
+
+- (NSMutableArray *)mineAnimationImages {
+    if (!_mineAnimationImages) {
+        _mineAnimationImages = [NSMutableArray array];
+    }
+    return _mineAnimationImages;
+}
+
+- (void)addImages {
+    NSString *quizImageName, *matchImageName, *discountImageName, *mineImageName;
+    for (int i = 1; i < 24; i++) {
+        quizImageName = [NSString stringWithFormat:@"竞猜_%d", i];
+        matchImageName = [NSString stringWithFormat:@"赛事_%d", i];
+        discountImageName = [NSString stringWithFormat:@"优惠_%d", i];
+        mineImageName = [NSString stringWithFormat:@"我的_%d", i];
+        [self.quizAnimationImages addObject:quizImageName];
+        [self.matchAnimationImages addObject:matchImageName];
+        [self.discountAnimationImages addObject:discountImageName];
+        [self.mineAnimationImages addObject:mineImageName];
+    }
+}
 
 -(void)setupTabbar{
     TYTabBar *tabbar = [[TYTabBar alloc] init];
@@ -35,59 +84,59 @@
     self.tyTabbar.realDelegate = self;
     //给tabbar设置内容
    //准备数据
-    NSArray *arr = @[@"首页",@"分类",@"购物车",@"搜索",@"我的"];//title
-    NSArray *arr1 = @[@"search_1",@"search_2",@"search_3"]; //如果需要帧动画 这里需要传入每个按钮点击后的动画帧
-    NSArray *barImages = @[@[@"home_sel",@"home_sel"],      //按钮默认图片和选中后图片
-                           @[@"classify_sel",@"classify_sel"],
-                           @[@"cart",@"cart"],
-                           @[@"search_sel",@"search_sel"],
-                           @[@"mine_sel",@"mine_sel"],
+    NSArray *arr = @[@"竞猜", @"赛事", @"发现", @"优惠", @"我的"];                //title
+    NSArray *animationImageArr = @[self.quizAnimationImages, self.matchAnimationImages, @[], self.discountAnimationImages, self.mineAnimationImages];
+    NSArray *barImages = @[@[@"quiz_normal", @"quiz_selected"],                //按钮默认图片和选中后图片
+                           @[@"match_normal", @"match_selected"],
+                           @[@"discovery_normal", @"discovery_selected"],
+                           @[@"discount_normal", @"discount_selected"],
+                           @[@"mine_normal", @"mine_selected"],
                         ];
-    NSArray *anmations = @[@(TYBarItemAnimationTypeScale),@(TYBarItemAnimationTypeRotate),@(TYBarItemAnimationTypeRotate),@(TYBarItemAnimationTypeFrames),@(TYBarItemAnimationTypeScale)];
+    NSArray *anmations = @[@(TYBarItemAnimationTypeFrames),@(TYBarItemAnimationTypeFrames),@(TYBarItemAnimationTypeRotate),@(TYBarItemAnimationTypeFrames),@(TYBarItemAnimationTypeFrames)];
+
     NSMutableArray *datas = [NSMutableArray array];
-    for (int i =0;  i < 5; i++) {
+    for (int i = 0;  i < 5; i++) {
         //每个按钮都可以单独设置图片 文字 动画效果(暂时只有4种效果)等
-        TYBarItemModel *model = [[TYBarItemModel alloc] initWithTitle:arr[i] images:arr1 normalImage:barImages[i][0] selectedImage:barImages[i][1] AnimationType:[anmations[i] integerValue]];
+        TYBarItemModel *model = [[TYBarItemModel alloc] initWithTitle:arr[i] images:animationImageArr[i] normalImage:barImages[i][0] selectedImage:barImages[i][1] AnimationType:[anmations[i] integerValue]];
         [datas addObject:model];
     }
     //初始化tabbar数据
     [self.tyTabbar loadItemsWithData:datas];
+
     //替换系统的tabbar
     [self setValue:tabbar forKeyPath:@"tabBar"];
-    
+
     //设置角标
     [self.tyTabbar badgeText:@"9" forIndex:0];
     [self.tyTabbar badgeText:@"." forIndex:3];
-    
+
 }
 
 - (void) loadViewControllers {
     
     ViewController* homepageVC = [[ViewController alloc] init];
-    [self setUpOneChildVcWithVc:homepageVC  title:@"首页"];
+    [self setUpOneChildVcWithVc:homepageVC  title:@"竞猜"];
     
     ViewController * classifyVC = [[ViewController alloc] init];
-    [self setUpOneChildVcWithVc:classifyVC  title:@"分类"];
+    [self setUpOneChildVcWithVc:classifyVC  title:@"赛事"];
     
     ViewController* shoppingCartVC = [[ViewController alloc] init];
-    [self setUpOneChildVcWithVc:shoppingCartVC  title:@"购物车"];
+    [self setUpOneChildVcWithVc:shoppingCartVC  title:@"发现"];
     
     ViewController * searchVC = [[ViewController alloc] init];
-    [self setUpOneChildVcWithVc:searchVC  title:@"搜索"];
+    [self setUpOneChildVcWithVc:searchVC  title:@"优惠"];
     
     ViewController* personalCenterVC = [[ViewController alloc] init];
     [self setUpOneChildVcWithVc:personalCenterVC  title:@"我的"];
 }
 
 
-- (void)setUpOneChildVcWithVc:(UIViewController *)Vc title:(NSString *)title
-{
+- (void)setUpOneChildVcWithVc:(UIViewController *)Vc title:(NSString *)title {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:Vc];
     
     Vc.navigationItem.title = title;
     
     [self addChildViewController:nav];
-    
 }
 
 

@@ -12,12 +12,12 @@
 #import "UIImage+FastKit.h"
 #import "TYBarItemModel.h"
 
-#define barItemCount                5                               //tabbarItem 个数
-#define barItemPlusButtonIndex      2                              //➕按钮的位置  -1表示不存在+按钮  从0开始
-#define barItemFontSize             12                              //字体大小
-#define barItemNomalTextColor       [UIColor grayColor]             //字体默认颜色
-#define barItemSelectedTextColor    [UIColor redColor]              //选中字体颜色
-#define barItemSubMargin            3                               //文字和图片的间距
+#define barItemCount                5                                //tabbarItem 个数
+#define barItemPlusButtonIndex      2                                //➕按钮的位置  -1表示不存在+按钮  从0开始
+#define barItemFontSize             12                               //字体大小
+#define barItemNomalTextColor       [UIColor whiteColor]             //字体默认颜色
+#define barItemSelectedTextColor    [UIColor whiteColor]             //选中字体颜色
+#define barItemSubMargin            3                                //文字和图片的间距
 
 
 @interface TYTabBar ()
@@ -43,7 +43,7 @@
     //设置背景图片为透明 根据情况设置
     [self setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]]];
     //设置背景颜色为白色
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor blackColor];
     //设置ShadowImage 根据情况设置
     [self setShadowImage:[UIImage imageWithColor:[UIColor clearColor]]];
 }
@@ -72,7 +72,7 @@
         [self addSubview:button];
 
         //第一个按钮默认选中
-        if (i == 0) {
+        if (i == 2) {
             tempItem = button;
         }
 
@@ -154,9 +154,10 @@
             //设置item的位置
             item.frame = CGRectMake(width*btnIndex, 0, width, height);
             
-            if (barItemPlusButtonIndex == btnIndex) {  //plusButton位置  具体偏移根据时间情况进行调节
+            if (barItemPlusButtonIndex == btnIndex) {
+                //plusButton位置  具体偏移根据时间情况进行调节
                 item.frame = CGRectMake(width*btnIndex, -20, width, height+20);
-                item.subMargin = 10;
+                item.subMargin = 0;
             }
             btnIndex++;
         }
