@@ -9,7 +9,8 @@ TYTabBar可以快速实现以下功能
 >4.只需要配置一下，就可以实现中间按钮凸出效果，并且超出边界仍然有点击效果
 
 效果图
-
+[](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif1.gif)
+[](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif2.gif)
 
 ### 思路回顾(TYTabBar)
 ##### 系统的Tabbar功能不算完善，有时候没法完全满足需求，我们这里通过kvc的方式把系统的tabbar替换成我们自己定义的tabbar。
