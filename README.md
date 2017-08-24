@@ -33,9 +33,9 @@ TYTabBar可以快速实现以下功能
 #define barItemSubMargin            3                               //文字和图片的间距
 ```
 
-#### 初始化需要TYTabBar中需要展示的按钮并保存起来，并添加点击事件
+#### 初始化需要TYTabBar中需要展示的按钮并保存起来，并添加点击事件 传入默认第几个tabbarItem默认被选中
 ```
--(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels{
+-(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels defaultSelect:(NSInteger)index {
     //初始化
     NSMutableArray *mutalArr = [NSMutableArray array];
 
@@ -59,7 +59,7 @@ TYTabBar可以快速实现以下功能
         [self addSubview:button];
 
         //第一个按钮默认选中
-        if (i == 0) {
+        if (i == index) {
             tempItem = button;
         }
 
@@ -68,8 +68,14 @@ TYTabBar可以快速实现以下功能
     }
 
     self.myItems = mutalArr;
-    //设置默认选中第一个
-    [self itemClick:tempItem];
+    //设置默认选中第index个
+    if (tempItem) {
+        [self itemClick:tempItem];
+    }else{
+        //如果传入的index无效 则默认选中第0个
+        TYAnimationButton *item = self.myItems.firstObject;
+        [self itemClick:item];
+    }
 }
 
 ```
@@ -330,7 +336,7 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
         [datas addObject:model];
     }
     //初始化tabbar数据
-    [self.tyTabbar loadItemsWithData:datas];
+    [self.tyTabbar loadItemsWithData:datas defaultSelect:2];
 
     //替换系统的tabbar
     [self setValue:tabbar forKeyPath:@"tabBar"];
