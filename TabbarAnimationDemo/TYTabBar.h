@@ -41,9 +41,9 @@
  初始化自定义按钮
 
  @param itemModels model
+ @param index tabbar默认选中第Index个Item
  */
--(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels;
-
+-(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels defaultSelect:(NSInteger)index;
 
 /**
  设置badgeText

@@ -48,7 +48,7 @@
     [self setShadowImage:[UIImage imageWithColor:[UIColor clearColor]]];
 }
 
--(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels{
+-(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels defaultSelect:(NSInteger)index {
     //初始化
     NSMutableArray *mutalArr = [NSMutableArray array];
 
@@ -72,7 +72,7 @@
         [self addSubview:button];
 
         //第一个按钮默认选中
-        if (i == 2) {
+        if (i == index) {
             tempItem = button;
         }
 
@@ -81,9 +81,16 @@
     }
 
     self.myItems = mutalArr;
-    //设置默认选中第一个
-    [self itemClick:tempItem];
+    //设置默认选中第index个
+    if (tempItem) {
+        [self itemClick:tempItem];
+    }else{
+        //如果传入的index无效 则默认选中第0个
+        TYAnimationButton *item = self.myItems.firstObject;
+        [self itemClick:item];
+    }
 }
+
 
 -(void)badgeText:(NSString *)text forIndex:(NSInteger)index{
     //给指定的badgeText设置角标

@@ -100,8 +100,8 @@
         TYBarItemModel *model = [[TYBarItemModel alloc] initWithTitle:arr[i] images:animationImageArr[i] normalImage:barImages[i][0] selectedImage:barImages[i][1] AnimationType:[anmations[i] integerValue]];
         [datas addObject:model];
     }
-    //初始化tabbar数据
-    [self.tyTabbar loadItemsWithData:datas];
+    //初始化tabbar数据 并默认选中第二个tabbarItem
+    [self.tyTabbar loadItemsWithData:datas defaultSelect:2];
 
     //替换系统的tabbar
     [self setValue:tabbar forKeyPath:@"tabBar"];
