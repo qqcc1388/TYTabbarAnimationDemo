@@ -7,7 +7,7 @@ TYTabBar可以快速实现以下功能
 3. 支持badgeText,支持小红点功能
 4. 只需要配置一下，就可以实现中间按钮凸出效果，并且超出边界仍然有点击效果
 
-效果图
+效果图（由于图片资源的问题导致动画切换比较生硬，更改为满足尺寸的资源就好啦）
 
 ![](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif1.gif)
 ![](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif2.gif)
