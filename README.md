@@ -1,12 +1,11 @@
 # TYTabbarAnimationDemo
-a  highly customizable tabbar for iOS
 业务需求导致需要做一个tabbar,里面的按钮点击带有动画效果，tabbar中间的按钮凸出，凸出部分可以点击，支持badge 小红点等，为此封装了一个高度可定制的tabbar -> TYTabBar
 
 TYTabBar可以快速实现以下功能
->1.每个Item都有单击，双击事件回调
->2.tem可以支持多种动画（帧动画，缩放动画，旋转动画），每个Item都可以单独设置
->3.支持badgeText,支持小红点功能
->4.只需要配置一下，就可以实现中间按钮凸出效果，并且超出边界仍然有点击效果
+1.每个Item都有单击，双击事件回调
+2.tem可以支持多种动画（帧动画，缩放动画，旋转动画），每个Item都可以单独设置
+3.支持badgeText,支持小红点功能
+4.只需要配置一下，就可以实现中间按钮凸出效果，并且超出边界仍然有点击效果
 
 效果图
 
