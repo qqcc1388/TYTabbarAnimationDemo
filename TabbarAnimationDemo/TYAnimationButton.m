@@ -43,11 +43,9 @@
     _badgeOffsetX = 15;
     _badgeOffsetY = 15;
     _duration = 3.0f;
-    
     _animationType = TYBarItemAnimationTypeScale;
     
 }
-
 
 
 -(void)layoutSubviews{
@@ -89,6 +87,10 @@
 
 -(void)setImages:(NSArray *)images{
     _images = images;
+}
+
+-(BOOL)isAnimating{
+    return self.imageView.isAnimating;
 }
 
 #pragma mark - 动画

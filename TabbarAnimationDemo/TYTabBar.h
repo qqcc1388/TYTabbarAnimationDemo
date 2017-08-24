@@ -53,4 +53,9 @@
  */
 -(void)badgeText:(NSString *)text forIndex:(NSInteger)index;
 
+/**
+ barItem是否可以重复点击  重复点击动画结束后点击仍然有动画   默认NO
+ */
+@property (nonatomic,assign) BOOL canRepeatClick;
+
 @end

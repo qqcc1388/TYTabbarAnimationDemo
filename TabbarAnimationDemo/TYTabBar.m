@@ -120,8 +120,11 @@
     }
 
     //按钮重复点击没有效果
-    if (item != _lastItem) {
-        
+    if (item == _lastItem && self.canRepeatClick) { //可以重复点击
+        if (!item.isAnimating) { //正在动画
+            [item animationStart];
+        }
+    }else if(item != _lastItem){  //不可以重复点击
         //先把上次item动画关闭
         _lastItem.selected = NO;
         [_lastItem animationStop];
@@ -129,13 +132,16 @@
         //新点击的item动画开启
         item.selected = YES;
         [item animationStart];
-        
         //把按钮的点击状态传到出去 让tabbarController可以切换控制器
         if (_realDelegate && [_realDelegate respondsToSelector:@selector(tabBar:clickIndex:)]) {
             [self.realDelegate tabBar:self clickIndex:item.tag];
         }
         _lastItem = item;
     }
+}
+
+-(void)setCanRepeatClick:(BOOL)canRepeatClick{
+    _canRepeatClick = canRepeatClick;
 }
 
 //用自定义按钮去替换系统的tabbarItem

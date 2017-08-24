@@ -30,6 +30,11 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 @property (nonatomic,assign) TYBarItemAnimationType animationType;
 
 /**
+ 当前是否正在动画
+ */
+@property (nonatomic,assign,readonly) BOOL isAnimating;
+
+/**
  动画时长  帧动画才会用到
  */
 @property (nonatomic,assign) NSTimeInterval duration;
