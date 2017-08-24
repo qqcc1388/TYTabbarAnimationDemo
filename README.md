@@ -13,17 +13,17 @@ TYTabBar可以快速实现以下功能
 ![](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif2.gif)
 
 ### 思路回顾(TYTabBar)
-##### 系统的Tabbar功能不算完善，有时候没法完全满足需求，我们这里通过kvc的方式把系统的tabbar替换成我们自己定义的tabbar。
+#### 系统的Tabbar功能不算完善，有时候没法完全满足需求，我们这里通过kvc的方式把系统的tabbar替换成我们自己定义的tabbar。
 ```
     [self setValue:tabbar forKeyPath:@"tabBar"];
 ```
 
-##### 自定义一个TYTabBar继承UITabBar这样就可以继承很多系统TabBar既有很多属性和功能
+#### 自定义一个TYTabBar继承UITabBar这样就可以继承很多系统TabBar既有很多属性和功能
 ```
 @interface TYTabBar : UITabBar
 ```
 
-##### 初始化配置信息(很重要关系到Item个数，PlusItem的位置)
+#### 初始化配置信息(很重要关系到Item个数，PlusItem的位置)
 ```
 #define barItemCount                5                               //tabbarItem 个数
 #define barItemPlusButtonIndex      2                              //➕按钮的位置  -1表示不存在+按钮  从0开始
@@ -33,7 +33,7 @@ TYTabBar可以快速实现以下功能
 #define barItemSubMargin            3                               //文字和图片的间距
 ```
 
-##### 初始化需要TYTabBar中需要展示的按钮并保存起来，并添加点击事件
+#### 初始化需要TYTabBar中需要展示的按钮并保存起来，并添加点击事件
 ```
 -(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels{
     //初始化
@@ -74,7 +74,7 @@ TYTabBar可以快速实现以下功能
 
 ```
 
-##### 在TabBar的layoutSubviews方法中找到对应的系统的TabBarItem并隐藏起来，创建我们自己的Button并占用系统TabBarItem的位置
+#### 在TabBar的layoutSubviews方法中找到对应的系统的TabBarItem并隐藏起来，创建我们自己的Button并占用系统TabBarItem的位置
 ```
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -108,7 +108,7 @@ TYTabBar可以快速实现以下功能
 }
 
 ```
-##### 单击 双击事件处理和传递（这里通过代理将信息传递出去realDelegate一定要要实现，涉及到控制器跳转）
+#### 单击 双击事件处理和传递（这里通过代理将信息传递出去realDelegate一定要要实现，涉及到控制器跳转）
 ```
 -(void)itemClick:(TYAnimationButton *)item{
 
@@ -167,7 +167,7 @@ TYTabBar可以快速实现以下功能
 }
 ```
 
-##### badgeText 小红点设置（参考JSBadgeView并在源码上做了一点修改） 显示数字 @"2" 不显示内容@""或者nil 显示小红点@"."
+#### badgeText 小红点设置（参考JSBadgeView并在源码上做了一点修改） 显示数字 @"2" 不显示内容@""或者nil 显示小红点@"."
 ```
 -(void)badgeText:(NSString *)text forIndex:(NSInteger)index{
     //给指定的badgeText设置角标
@@ -195,7 +195,7 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 };
 ```
 
-##### 关于动画提供了2个动画方法 一个开始动画，一个结束动画，如果是帧动画，需要传入动画帧
+#### 关于动画提供了2个动画方法 一个开始动画，一个结束动画，如果是帧动画，需要传入动画帧
 ```
 #pragma mark - 动画
 -(void)animationStart{
@@ -287,7 +287,7 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 
 
 ```
-##### 给每个TYAnimationButton添加一个badgeView使其具备角标的功能 
+#### 给每个TYAnimationButton添加一个badgeView使其具备角标的功能 
 ```
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -305,7 +305,7 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 
 
 ### 关于使用 
-##### 初始化tabbar
+#### 初始化tabbar
 ```
 -(void)setupTabbar{
     TYTabBar *tabbar = [[TYTabBar alloc] init];
@@ -341,7 +341,7 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 
 }
 ```
-##### 初始化控制器
+#### 初始化控制器
 ```
 - (void) loadViewControllers {
     
@@ -372,7 +372,7 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 
 ```
 
-##### tabbar代理方法使用
+#### tabbar代理方法使用
 ```
 -(void)tabBar:(TYTabBar *)tabbar clickIndex:(NSInteger)index{
     [self setSelectedIndex:index];
