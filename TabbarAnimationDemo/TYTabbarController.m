@@ -96,11 +96,16 @@
 
     NSMutableArray *datas = [NSMutableArray array];
     for (int i = 0;  i < 5; i++) {
-        //每个按钮都可以单独设置图片 文字 动画效果(暂时只有4种效果)等
-        TYBarItemModel *model = [[TYBarItemModel alloc] initWithTitle:arr[i] images:animationImageArr[i] normalImage:barImages[i][0] selectedImage:barImages[i][1] AnimationType:[anmations[i] integerValue]];
+        //0. 根据需求选择填写对应的内容
+        //1. 每个按钮都可以单独设置图片 文字 动画效果(暂时只有4种效果)等
+        //2. 如果点击后不需要帧动画 images可以传nil
+        //3. 如果所有按钮都是统一动画，AnimationType 默认传一个值就可以了
+        //4. title为BarItem显示的文字
+        //5. nomalImage selectdImage 为BarItem选中和非选中的图片 选中和非选中按钮颜色在TYTabBar中配置
+        TYBarItemModel *model = [[TYBarItemModel alloc] initWithTitle:arr[i] images:nil normalImage:barImages[i][0] selectedImage:barImages[i][1] AnimationType:[anmations[i] integerValue]];
         [datas addObject:model];
     }
-    //初始化tabbar数据 并默认选中第二个tabbarItem
+    //初始化tabbar数据
     [self.tyTabbar loadItemsWithData:datas defaultSelect:2];
 
     //替换系统的tabbar
