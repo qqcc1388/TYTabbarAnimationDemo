@@ -390,6 +390,8 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 
 更多详细使用参考demo中代码
 
+如果你喜欢我文章，或者本文对你还有一点作用，请给小老弟我点个👍，谢谢！
+
 参考来源：
 > JSBadgeView   https://github.com/JaviSoto/JSBadgeView
 > CYLTabBarController   https://github.com/ChenYilong/CYLTabBarController

@@ -41,7 +41,7 @@
  初始化自定义按钮
 
  @param itemModels model
- @param index tabbar默认选中第Index个Item
+ @param index tabbar默认选中第Index个Item  从0开始 如果index超过tabbarItems最大值 则默认选中第0个
  */
 -(void)loadItemsWithData:(NSArray<TYBarItemModel *> *)itemModels defaultSelect:(NSInteger)index;
 
