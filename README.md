@@ -5,7 +5,8 @@ TYTabBar可以快速实现以下功能
 1. 每个Item都有单击，双击事件回调
 2. tem可以支持多种动画（帧动画，缩放动画，旋转动画），每个Item都可以单独设置
 3. 支持badgeText,支持小红点功能
-4. 只需要配置一下，就可以实现中间按钮凸出效果，并且超出边界仍然有点击效果
+4. 只需要配置一下，就可以实现不规则按钮效果，并且超出边界仍然有点击效果
+5. 支持横竖屏切换
 
 效果图（由于图片资源的问题导致动画切换比较生硬，更改为满足尺寸的资源就好啦）
 
@@ -295,18 +296,48 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 
 
 ```
-#### 给每个TYAnimationButton添加一个badgeView使其具备角标的功能 
+#### 给每个TYAnimationButton添加一个badgeView使其具备角标的功能  监听屏幕横竖屏变化并实时修改badgeView的位置
 ```
+/**
+ 角标x轴方向的偏移 默认15
+ */
+@property (nonatomic,assign) CGFloat badgeOffsetX;
+
+/**
+ 角标y轴方向的偏移 默认15
+ */
+@property (nonatomic,assign) CGFloat badgeOffsetY;
+
+/**
+ 角标x轴方向的偏移(横屏状态) 默认15 请根据具体需求微调
+ */
+@property (nonatomic,assign) CGFloat badgeLandscapeOffsetX;
+
+/**
+ 角标y轴方向的偏移(横屏状态) 默认40 请根据具体需求微调
+ */
+@property (nonatomic,assign) CGFloat badgeLandscapeOffsetY;
+
 -(void)layoutSubviews{
     [super layoutSubviews];
-    if (!self.badgeView && self.bounds.size.width !=0) {  //TYAnimationButton初始化OK，并且有了尺寸才创建badgeView
-        //给每个按钮添加一个角标
+    if((self.bounds.size.width !=0 && !self.badgeView) || self.orientation){
+        //先移除badgeView
+        [self.badgeView removeFromSuperview];
+        
+        //重新添加新的badgeView
         self.badgeView = [[JSBadgeView alloc] initWithParentView:self alignment:JSBadgeViewAlignmentTopRight];
         //设置角标参数
         _badgeView.badgeTextFont = [UIFont systemFontOfSize:12];
-        _badgeView.badgePositionAdjustment = CGPointMake(-_badgeOffsetX, _badgeOffsetY);
+        if (self.orientation == UIDeviceOrientationLandscapeLeft || self.orientation == UIDeviceOrientationLandscapeRight) { //横屏状态
+            _badgeView.badgePositionAdjustment = CGPointMake(-_badgeLandscapeOffsetX, _badgeLandscapeOffsetY);
+        }else{  //竖屏状态
+            _badgeView.badgePositionAdjustment = CGPointMake(-_badgeOffsetX, _badgeOffsetY);
+        }
         _badgeView.badgeStrokeWidth = 0.2;
         _badgeView.badgeText  = _badgeText;
+        
+        //清除旋转状态
+        self.orientation = UIDeviceOrientationUnknown;
     }
 }
 ```
