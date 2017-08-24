@@ -121,7 +121,7 @@
 
     //按钮重复点击没有效果
     if (item == _lastItem && self.canRepeatClick) { //可以重复点击
-        if (!item.isAnimating) { //正在动画
+        if (!item.isAnimating) { //正在动画什么都不做否则开始动画
             [item animationStart];
         }
     }else if(item != _lastItem){  //不可以重复点击
