@@ -26,12 +26,11 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-
-    [self addImages];
-
+    
+    //注意控制器初始化在前，初始化tabbar在后（要不然控制器未初始化，按钮选中无法跳转到正确的控制器）
     //设置controllers
     [self loadViewControllers];
-    
+    //初始化tabbar
     [self setupTabbar];
     
 }
@@ -83,6 +82,8 @@
     self.tyTabbar = tabbar;
     self.tyTabbar.realDelegate = self;
     //给tabbar设置内容
+    [self addImages];
+
    //准备数据
     NSArray *arr = @[@"竞猜", @"赛事", @"发现", @"优惠", @"我的"];                //title
     NSArray *animationImageArr = @[self.quizAnimationImages, self.matchAnimationImages, @[], self.discountAnimationImages, self.mineAnimationImages];
