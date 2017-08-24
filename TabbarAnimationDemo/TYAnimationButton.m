@@ -13,6 +13,8 @@
 
 @property (nonatomic,strong) JSBadgeView *badgeView;
 
+@property (nonatomic,assign) UIDeviceOrientation orientation;  //发生了横竖屏切换
+
 @end
 
 @implementation TYAnimationButton
@@ -35,6 +37,10 @@
     return self;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)initialize
 {
     [self setAdjustsImageWhenHighlighted:NO];
@@ -42,25 +48,53 @@
     //设置默认值
     _badgeOffsetX = 15;
     _badgeOffsetY = 15;
+    _badgeLandscapeOffsetX = 40;
+    _badgeLandscapeOffsetY = 15;
     _duration = 3.0f;
     _animationType = TYBarItemAnimationTypeScale;
     
+    //监听屏幕的改变，如果发生横竖屏切换需要从新设置JSBadgeView的位置
+    UIDevice *device = [UIDevice currentDevice]; //Get the device object
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:device];
+    
 }
 
+-(void)orientationChanged:(NSNotification *)noti{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    self.orientation = orientation;
+    switch (orientation) {
+        case UIDeviceOrientationPortrait:            // Device oriented
+        case UIDeviceOrientationPortraitUpsideDown:  // Device oriented
+        case UIDeviceOrientationLandscapeLeft :      // Device oriented
+        case UIDeviceOrientationLandscapeRight:      // Device oriented horizontally, home button on the left
+            break;
+        default:
+            break;
+    }
+}
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    if (!self.badgeView && self.bounds.size.width !=0) {
-        //给每个按钮添加一个角标
+
+    if((self.bounds.size.width !=0 && !self.badgeView) || self.orientation){
+        //先移除badgeView
+        [self.badgeView removeFromSuperview];
+        
+        //重新添加新的badgeView
         self.badgeView = [[JSBadgeView alloc] initWithParentView:self alignment:JSBadgeViewAlignmentTopRight];
         //设置角标参数
         _badgeView.badgeTextFont = [UIFont systemFontOfSize:12];
-        _badgeView.badgePositionAdjustment = CGPointMake(-_badgeOffsetX, _badgeOffsetY);
+        if (self.orientation == UIDeviceOrientationLandscapeLeft || self.orientation == UIDeviceOrientationLandscapeRight) { //横屏状态
+            _badgeView.badgePositionAdjustment = CGPointMake(-_badgeLandscapeOffsetX, _badgeLandscapeOffsetY);
+        }else{  //竖屏状态
+            _badgeView.badgePositionAdjustment = CGPointMake(-_badgeOffsetX, _badgeOffsetY);
+        }
         _badgeView.badgeStrokeWidth = 0.2;
         _badgeView.badgeText  = _badgeText;
-
+        
+        //清除旋转状态
+        self.orientation = UIDeviceOrientationUnknown;
     }
-
 }
 
 #pragma mark - setter getter
@@ -77,12 +111,19 @@
 -(void)setBadgeOffsetX:(CGFloat)badgeOffsetX{
     _badgeOffsetX = badgeOffsetX;
     _badgeView.badgePositionAdjustment = CGPointMake(-badgeOffsetX, _badgeOffsetY);
+}
 
+-(void)setBadgeLandscapeOffsetX:(CGFloat)badgeLandscapeOffsetX{
+    _badgeLandscapeOffsetX = badgeLandscapeOffsetX;
 }
 
 -(void)setBadgeOffsetY:(CGFloat)badgeOffsetY{
     _badgeOffsetY = badgeOffsetY;
     _badgeView.badgePositionAdjustment = CGPointMake(-_badgeOffsetX, badgeOffsetY);
+}
+
+-(void)setBadgeLandscapeOffsetY:(CGFloat)badgeLandscapeOffsetY{
+    _badgeLandscapeOffsetY = badgeLandscapeOffsetY;
 }
 
 -(void)setImages:(NSArray *)images{

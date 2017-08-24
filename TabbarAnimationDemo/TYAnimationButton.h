@@ -20,22 +20,22 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
 @interface TYAnimationButton : UIButton
 
 /**
- 设置按钮的帧动画
- */
-@property (nonatomic,strong) NSArray<NSString *> *images;
-
-/**
  动画类型
  */
 @property (nonatomic,assign) TYBarItemAnimationType animationType;
 
 /**
- 当前是否正在动画
+ 动画图片(帧动画)
+ */
+@property (nonatomic,strong) NSArray *images;
+
+/**
+ 当前是否正在动画(帧动画)
  */
 @property (nonatomic,assign,readonly) BOOL isAnimating;
 
 /**
- 动画时长  帧动画才会用到
+ 动画时长(帧动画)
  */
 @property (nonatomic,assign) NSTimeInterval duration;
 
@@ -54,10 +54,24 @@ typedef NS_ENUM(NSUInteger, TYBarItemAnimationType) {
  */
 @property (nonatomic,assign) CGFloat badgeOffsetY;
 
-//开启动画
+/**
+ 角标x轴方向的偏移(横屏状态) 默认15 请根据具体需求微调
+ */
+@property (nonatomic,assign) CGFloat badgeLandscapeOffsetX;
+
+/**
+ 角标y轴方向的偏移(横屏状态) 默认40 请根据具体需求微调
+ */
+@property (nonatomic,assign) CGFloat badgeLandscapeOffsetY;
+
+/**
+ 开启动画
+ */
 -(void)animationStart;
 
-//结束动画
+/**
+ 结束动画
+ */
 -(void)animationStop;
 
 @end
