@@ -9,6 +9,7 @@ TYTabBar可以快速实现以下功能
 >4.只需要配置一下，就可以实现中间按钮凸出效果，并且超出边界仍然有点击效果
 
 效果图
+
 ![](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif1.gif)
 ![](https://github.com/qqcc1388/TYTabbarAnimationDemo/blob/master/Resource/gif2.gif)
 
