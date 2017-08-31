@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TYAnimationButton.h"
+#import "TYTabbarController.h"
 
 
 @interface ViewController ()
@@ -27,5 +28,15 @@
 -(void)reloadColor{
     self.view.backgroundColor = [UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0];
 
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    static BOOL flag;
+    flag ^=1;
+    if (false) {
+        [(TYTabbarController *)self.tabBarController setTabbarHidden:NO animated:YES];
+    }else{
+        [(TYTabbarController *)self.tabBarController setTabbarHidden:YES animated:YES];
+    }
 }
 @end

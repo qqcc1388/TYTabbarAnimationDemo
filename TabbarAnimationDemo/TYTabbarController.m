@@ -149,6 +149,23 @@
 }
 
 
+-(void)setTabbarHidden:(BOOL)hidden animated:(BOOL)animated{
+    NSTimeInterval time = animated ? 0.3 : 0.0;
+    if (self.tyTabbar.isHidden) {
+        self.tyTabbar.hidden = NO;
+        [UIView animateWithDuration:time animations:^{
+            self.tyTabbar.transform = CGAffineTransformIdentity;
+        }];
+    }else{
+        CGFloat h = self.tyTabbar.frame.size.height;
+        [UIView animateWithDuration:time-0.1 animations:^{
+            self.tyTabbar.transform = CGAffineTransformMakeTranslation(0,h);
+        }completion:^(BOOL finished) {
+            self.tyTabbar.hidden = YES;
+        }];
+    }
+}
+
 #pragma mark - tabBarDelegate
 -(void)tabBar:(TYTabBar *)tabbar clickIndex:(NSInteger)index{
     [self setSelectedIndex:index];
