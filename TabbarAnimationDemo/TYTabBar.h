@@ -38,6 +38,11 @@
 @property (nonatomic,weak) id<TYTabBarDelegate> realDelegate;
 
 /**
+ barItem是否可以重复点击  重复点击动画结束后点击仍然有动画   默认NO
+ */
+@property (nonatomic,assign) BOOL canRepeatClick;
+
+/**
  初始化自定义按钮
 
  @param itemModels model
@@ -52,10 +57,5 @@
  @param index index
  */
 -(void)badgeText:(NSString *)text forIndex:(NSInteger)index;
-
-/**
- barItem是否可以重复点击  重复点击动画结束后点击仍然有动画   默认NO
- */
-@property (nonatomic,assign) BOOL canRepeatClick;
 
 @end
